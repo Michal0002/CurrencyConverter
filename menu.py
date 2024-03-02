@@ -56,11 +56,11 @@ def optionA():
     to_currency_str = switch(to_currency)
 
     if from_currency_str and to_currency_str:
-        amount = float(input("Enter the amount to convert: "))
-        converted_currency = currency_converter.convert(amount, from_currency_str, to_currency_str)
-        if converted_currency:
-            print(f"Converted currency from {amount} {from_currency_str} is {converted_currency} {to_currency_str} ")
-        else:
-            print("Conversion failed.")
+        try:
+            amount = float(input("Enter the amount to convert: "))
+            converted_currency = currency_converter.convert(amount, from_currency_str, to_currency_str)
+            print(f"Converted currency from {amount} {from_currency_str} is {round(converted_currency,2)} {to_currency_str}")
+        except ValueError:
+            print("Invalid amount entered.")
     else:
-        print("Invalid values.")
+        print("Invalid currencies selected.")

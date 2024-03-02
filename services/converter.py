@@ -15,11 +15,10 @@ def convert(from_currency, to_currency, amount):
         return currency.convert(amount, from_currency, to_currency)
 
 def display_data():
-    currency_converter = CurrencyConverter()    
-    currencies = currency_converter.currencies
+    currencies = currency.currencies
     date = datetime.today().strftime('%Y-%m-%d')
     
-    currency_data = [(currency, round(currency_converter.convert(1, currency, 'USD'), 2), date) for currency in currencies]
+    currency_data = [(currency, round(currency.convert(1, currency, 'USD'), 2), date) for currency in currencies]
     df = pd.DataFrame(currency_data, columns=['Currency', 'Value', "Date"])
     print(tabulate(df, headers='keys', tablefmt='rounded_outline', showindex=False))
 

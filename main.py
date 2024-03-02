@@ -1,2 +1,3 @@
-import menus as menu
+import menu as menu
+
 menu.mainMenu()
