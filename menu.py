@@ -24,26 +24,26 @@ def mainMenu():
 
 
 def display_menu():
-    print("Choose your currency:")
-    print("\n1. PLN")
-    print("2. EUR")
-    print("3. USD")
+    currencies = converter.all_currencies()    
+    print("Choose your currency (FROM):")
+
+    for idx, currency in enumerate(currencies, start=1):
+        print(f"{idx}. {currency}")
     from_currency = input("From: ")
-
-    print("\n1. PLN")
-    print("2. EUR")
-    print("3. USD")
+    
+    print("\nChoose your currency (TO):")
+    for idx, currency in enumerate(currencies, start=1):
+        print(f"{idx}. {currency}")
     to_currency = input("To: ")
-
-    return from_currency, to_currency
+  
+    return from_currency, to_currency    
 
 def switch(choice):
-    if choice == '1':
-        return "PLN"
-    elif choice == '2':
-        return "EUR"
-    elif choice == '3':
-        return "USD"
+    currencies = converter.all_currencies()
+    if choice.isdigit() and 1 <= int(choice) <= len(currencies):
+        return list(currencies)[int(choice) - 1]
+    elif choice in currencies:
+        return choice
     else:
         print("Unknown choice")
         return None
@@ -64,3 +64,5 @@ def optionA():
             print("Invalid amount entered.")
     else:
         print("Invalid currencies selected.")
+
+    

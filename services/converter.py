@@ -1,7 +1,6 @@
 from currency_converter import CurrencyConverter
 from datetime import datetime
 from tabulate import tabulate
-
 import pandas as pd
 
 currency = CurrencyConverter()
@@ -23,3 +22,6 @@ def display_data():
     print(tabulate(df, headers='keys', tablefmt='rounded_outline', showindex=False))
 
 
+def all_currencies():
+    currencies = currency.currencies
+    return currencies
