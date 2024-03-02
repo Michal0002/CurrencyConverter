@@ -1,5 +1,24 @@
 from currency_converter import CurrencyConverter
+from datetime import datetime
+import pandas as pd
+
+currency = CurrencyConverter()
 
 def convert(from_currency, to_currency, amount):
-    currency = CurrencyConverter()
-    return currency.convert(amount, from_currency, to_currency)
+    if not from_currency or not to_currency: 
+        print ("Invalid currency")
+    elif amount <= 0:
+        print ("Amount must be positive")
+    else:
+        return currency.convert(amount, from_currency, to_currency)
+
+def display_data():
+    currency_converter = CurrencyConverter()    
+    currencies = currency_converter.currencies
+    date = datetime.today().strftime('%Y-%m-%d')
+    
+    currency_data = [(currency, round(currency_converter.convert(1, currency, 'USD'), 2), date) for currency in currencies]
+    df = pd.DataFrame(currency_data, columns=['Currency', 'Value', "Date"])
+    print(df)
+
+
