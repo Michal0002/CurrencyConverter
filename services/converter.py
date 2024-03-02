@@ -1,5 +1,7 @@
 from currency_converter import CurrencyConverter
 from datetime import datetime
+from tabulate import tabulate
+
 import pandas as pd
 
 currency = CurrencyConverter()
@@ -19,6 +21,6 @@ def display_data():
     
     currency_data = [(currency, round(currency_converter.convert(1, currency, 'USD'), 2), date) for currency in currencies]
     df = pd.DataFrame(currency_data, columns=['Currency', 'Value', "Date"])
-    print(df)
+    print(tabulate(df, headers='keys', tablefmt='rounded_outline', showindex=False))
 
 
