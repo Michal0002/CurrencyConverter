@@ -1,4 +1,5 @@
 from services import converter
+from tabulate import tabulate
 
 def mainMenu():
         print("\nCurrency Conventer")
@@ -27,13 +28,12 @@ def display_menu():
     currencies = converter.all_currencies()    
     print("Choose your currency (FROM):")
 
-    for idx, currency in enumerate(currencies, start=1):
-        print(f"{idx}. {currency}")
+    table = [[idx, currency] for idx, currency in enumerate(currencies, start=1)]
+    print(tabulate(table, headers=["Index", "Currency"]))
     from_currency = input("From: ")
     
     print("\nChoose your currency (TO):")
-    for idx, currency in enumerate(currencies, start=1):
-        print(f"{idx}. {currency}")
+    print(tabulate(table, headers=["Index", "Currency"]))
     to_currency = input("To: ")
   
     return from_currency, to_currency    
@@ -59,7 +59,7 @@ def optionA():
         try:
             amount = float(input("Enter the amount to convert: "))
             converted_currency = currency_converter.convert(amount, from_currency_str, to_currency_str)
-            print(f"Converted currency from {amount} {from_currency_str} is {round(converted_currency,2)} {to_currency_str}")
+            print(f"Converted currency from {amount} {from_currency_str} is {round(converted_currency,3)} {to_currency_str}")
         except ValueError:
             print("Invalid amount entered.")
     else:
