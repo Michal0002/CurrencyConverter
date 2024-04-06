@@ -1,68 +1,56 @@
+import tkinter as tk
+from tkinter import messagebox
 from services import converter
-from tabulate import tabulate
 
-def mainMenu():
-        print("\nCurrency Conventer")
-        print("===================")
-        choice = input("""
-                        A: Convert currency
-                        B: Display statistics
-                        C: Exit
-                        
-                        Please enter your choice: """)
+def convert_currency():
+    global from_currency_var, to_currency_var, amount_entry
 
-        if choice =="A" or choice == "a":
-            optionA()            
-        elif choice == "B" or choice == "b":
-            converter.display_data()
-            mainMenu()
-        elif choice == "C" or choice == "c":
-            print("Bye!")
-            exit()
-        else: 
-            print("Invalid choice. Choose from available options.")
-            mainMenu()
+    from_currency = from_currency_var.get()
+    to_currency = to_currency_var.get()
+    amount = amount_entry.get()
 
+    try:
+        amount = float(amount)
+        converted_amount = converter.convert(from_currency, to_currency, amount)
+        messagebox.showinfo("Conversion Result", f"{amount} {from_currency} is {round(converted_amount, 2)} {to_currency}")
+    except ValueError:
+        messagebox.showerror("Error", "Invalid amount entered.")
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
 
-def display_menu():
-    currencies = converter.all_currencies()    
-    print("Choose your currency (FROM):")
+def main_menu():
+    global from_currency_var, to_currency_var, amount_entry
 
-    table = [[idx, currency] for idx, currency in enumerate(currencies, start=1)]
-    print(tabulate(table, headers=["Index", "Currency"]))
-    from_currency = input("From: ")
-    
-    print("\nChoose your currency (TO):")
-    print(tabulate(table, headers=["Index", "Currency"]))
-    to_currency = input("To: ")
-  
-    return from_currency, to_currency    
+    window = tk.Tk()
+    window.title("Currency Converter")
 
-def switch(choice):
-    currencies = converter.all_currencies()
-    if choice.isdigit() and 1 <= int(choice) <= len(currencies):
-        return list(currencies)[int(choice) - 1]
-    elif choice in currencies:
-        return choice
-    else:
-        print("Unknown choice")
-        return None
+    #default values
+    from_currency_var = tk.StringVar()
+    from_currency_var.set("USD")  
+    to_currency_var = tk.StringVar()
+    to_currency_var.set("EUR")
 
-def optionA():
-    from_currency, to_currency = display_menu()  
-    currency_converter = converter.CurrencyConverter() 
+    currencies = sorted(converter.all_currencies())  
 
-    from_currency_str = switch(from_currency)  
-    to_currency_str = switch(to_currency)
+    from_label = tk.Label(window, text="From Currency:")
+    from_label.pack()
+    from_menu = tk.OptionMenu(window, from_currency_var, *currencies)
+    from_menu.pack()
 
-    if from_currency_str and to_currency_str:
-        try:
-            amount = float(input("Enter the amount to convert: "))
-            converted_currency = currency_converter.convert(amount, from_currency_str, to_currency_str)
-            print(f"Converted currency from {amount} {from_currency_str} is {round(converted_currency,3)} {to_currency_str}")
-        except ValueError:
-            print("Invalid amount entered.")
-    else:
-        print("Invalid currencies selected.")
+    to_label = tk.Label(window, text="To Currency:")
+    to_label.pack()
+    to_menu = tk.OptionMenu(window, to_currency_var, *currencies)
+    to_menu.pack()
 
-    
+    amount_label = tk.Label(window, text="Amount:")
+    amount_label.pack()
+    amount_entry = tk.Entry(window)
+    amount_entry.pack()
+
+    convert_button = tk.Button(window, text="Convert", command=convert_currency)
+    convert_button.pack()
+
+    window.mainloop()
+
+if __name__ == "__main__":
+    main_menu()
