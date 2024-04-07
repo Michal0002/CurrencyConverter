@@ -1,9 +1,8 @@
 import tkinter as tk
-from tkinter import messagebox
 from services import converter
 
 def convert_currency():
-    global from_currency_var, to_currency_var, amount_entry
+    global from_currency_var, to_currency_var, amount_entry, result_label
 
     from_currency = from_currency_var.get()
     to_currency = to_currency_var.get()
@@ -12,24 +11,24 @@ def convert_currency():
     try:
         amount = float(amount)
         converted_amount = converter.convert(from_currency, to_currency, amount)
-        messagebox.showinfo("Conversion Result", f"{amount} {from_currency} is {round(converted_amount, 2)} {to_currency}")
+        result_label.config(text=f"{amount} {from_currency} is {round(converted_amount, 2)} {to_currency}")
     except ValueError:
-        messagebox.showerror("Error", "Invalid amount entered.")
+        result_label.config(text="Invalid amount entered.")
     except Exception as e:
-        messagebox.showerror("Error", str(e))
+        result_label.config(text=str(e))
 
 def main_menu():
-    global from_currency_var, to_currency_var, amount_entry
+    global from_currency_var, to_currency_var, amount_entry, result_label
 
     window = tk.Tk()
     window.title("Currency Converter")
 
     from_currency_var = tk.StringVar()
-    from_currency_var.set("USD")  
+    from_currency_var.set("USD")
     to_currency_var = tk.StringVar()
     to_currency_var.set("EUR")
 
-    currencies = sorted(converter.all_currencies())  
+    currencies = sorted(converter.all_currencies())
 
     from_label = tk.Label(window, text="From Currency:")
     from_label.pack()
@@ -48,6 +47,9 @@ def main_menu():
 
     convert_button = tk.Button(window, text="Convert", command=convert_currency)
     convert_button.pack()
+
+    result_label = tk.Label(window, text="")
+    result_label.pack()
 
     # Create a menu bar
     menubar = tk.Menu(window)
