@@ -19,7 +19,9 @@ def display_data():
     
     currency_data = [(currency, round(currency.convert(1, currency, 'USD'), 2), date) for currency in currencies]
     df = pd.DataFrame(currency_data, columns=['Currency', 'Value', "Date"])
-    print(tabulate(df, headers='keys', tablefmt='rounded_outline', showindex=False))
+    
+    print(df)
+
 
 
 def all_currencies():

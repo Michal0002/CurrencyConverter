@@ -24,7 +24,6 @@ def main_menu():
     window = tk.Tk()
     window.title("Currency Converter")
 
-    #default values
     from_currency_var = tk.StringVar()
     from_currency_var.set("USD")  
     to_currency_var = tk.StringVar()
@@ -50,7 +49,22 @@ def main_menu():
     convert_button = tk.Button(window, text="Convert", command=convert_currency)
     convert_button.pack()
 
+    # Create a menu bar
+    menubar = tk.Menu(window)
+    window.config(menu=menubar)
+
+    # Add Options menu
+    options_menu = tk.Menu(menubar, tearoff=0)
+    menubar.add_cascade(label="Options", menu=options_menu)
+    options_menu.add_command(label="Display Data", command=display_data)
+
     window.mainloop()
+
+def display_data():
+    converter.display_data()
+    
+def about_info():
+    messagebox.showinfo("About", "This is a simple currency converter application.")
 
 if __name__ == "__main__":
     main_menu()
