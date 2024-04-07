@@ -1,9 +1,9 @@
 # Currency Conveter Console App
 
 \
-This console application is a currency converter tool built using Python, leveraging the tabulate and pandas libraries along with the CurrencyConverter module.  
+Currency converter tool built using Python, leveraging the tabulate and pandas libraries along with the CurrencyConverter module with Tkinter.  
 \
-![image](https://github.com/Michal0002/CurrencyConverter/assets/44274110/f1071a70-0e15-44a6-9c0f-21ee03a66c28)
+![image](https://github.com/Michal0002/CurrencyConverter/assets/44274110/22fbbd98-f713-4911-86b0-3e58b90f0f4f)
 
 It provides users with two primary functionalities:
 
